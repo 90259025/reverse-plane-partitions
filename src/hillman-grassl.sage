@@ -1,19 +1,27 @@
+#Converts an rpp to an s-tuple of multiplicities as specified in the Hillman-Grassl paper
 def hilmann_grassl(rpp):
     n = sum([sum(row) for row in rpp])
 
-    col_lengths = [sum([len(row) >= j + 1 for row in rpp]) for j in range(len(rpp[0]))]
+    col_lengths = get_col_lengths(rpp)
 
     if not verify_rpp(rpp, col_lengths):
         return
 
     pivot, zigzag_path = get_zigzag_path(rpp, col_lengths)
 
-    
+
 
     return
 
 
 
+#Returns an array C, where C[j] is the length of column j of rpp
+def get_col_lengths(rpp):
+    return [sum([len(row) >= j + 1 for row in rpp]) for j in range(len(rpp[0]))]
+
+
+
+#Verifies that an rpp with specified column lengths is in fact an rpp
 def verify_rpp(rpp, col_lengths):
     #Check that rpp is a Young tableau
     for i in range(len(rpp) - 1):
@@ -48,6 +56,7 @@ def verify_rpp(rpp, col_lengths):
 
 
 
+#Returns the zigzag path for an rpp
 def get_zigzag_path(rpp, col_lengths):
     path = []
 
