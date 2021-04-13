@@ -1,14 +1,32 @@
 def hilmann_grassl(rpp):
+    n = sum([sum(row) for row in rpp])
+
+    col_lengths = [sum([len(row) >= j + 1 for row in rpp]) for j in range(len(rpp[0]))]
+
+    if not verify_rpp(rpp, col_lengths):
+        return
+
+    pivot, zigzag_path = get_zigzag_path(rpp, col_lengths)
+
+    
+
     return
 
 
 
-def verify_rpp(rpp):
+def verify_rpp(rpp, col_lengths):
     #Check that rpp is a Young tableau
     for i in range(len(rpp) - 1):
         if len(rpp[i]) < len(rpp[i + 1]):
             print(f"Not an Young tableau: row {i} is longer than row {i + 1}")
             return False
+
+    #Check that every entry is nonnegative
+    for i in range(len(rpp)):
+        for j in range(len(rpp[i])):
+            if rpp[i][j] < 0:
+                print(f"Not an Young tableau: ({i}, {j}) < 0")
+                return False
 
     #Check every row is weakly increasing
     for i in range(len(rpp)):
@@ -21,9 +39,7 @@ def verify_rpp(rpp):
 
     #Check every column is weakly increasing
     for j in range(len(rpp[0])):
-        col_length = sum([len(row) >= j + 1 for row in rpp])
-
-        for i in range(col_length - 1):
+        for i in range(col_lengths[j] - 1):
             if rpp[i][j] > rpp[i + 1][j]:
                 print(f"Not an rpp: ({i}, {j}) > ({i + 1}, {j})")
                 return False
@@ -32,9 +48,53 @@ def verify_rpp(rpp):
 
 
 
+def get_zigzag_path(rpp, col_lengths):
+    path = []
+
+    c = 0
+    start_j = 0
+    r = 0
+
+    pivot = (0, 0)
+
+    #First, find the smallest j so that (q_j, j > 0).
+    for j in range(len(rpp[0])):
+        if rpp[col_lengths[j] - 1][j] != 0:
+            start_j = j
+            c = j
+            r = col_lengths[j] - 1
+            break
+
+
+
+    for i in range(r, -1, -1):
+        #Find the smallest j bigger than the current one (i.e. c) with (i, j) = (i - 1, j)
+
+        found_zigzag = False
+
+        for j in range(start_j, len(rpp[i])):
+            if i != 0 and rpp[i][j] == rpp[i - 1][j]:
+                path += [[i, k] for k in range(start_j, j + 1)]
+                start_j = j
+                found_zigzag = True
+                break
+
+        #If we failed to find that, just add the end of the row to the path and stop
+        if i == 0 or not found_zigzag:
+            path += [[i, k] for k in range(start_j, len(rpp[i]))]
+            break
+
+
+
+    return ([i, c], path)
+
+
+
 rpp = [
-    [1, 2, 2],
-    [1, 1]
+    [0, 2, 4, 5],
+    [1, 3, 4],
+    [1, 3, 4],
+    [3, 3]
 ]
 
-print(verify_rpp(rpp))
+hilmann_grassl(rpp)
