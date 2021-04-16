@@ -1,3 +1,3 @@
 # Reverse Plane Partitions
 
-A Julia library for generating reverse plane partitions
+A Sage library for generating reverse plane partitions

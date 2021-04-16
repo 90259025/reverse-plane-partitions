@@ -1,5 +1,5 @@
 #Converts an rpp to an s-tuple of multiplicities as specified in the Hillman-Grassl paper.
-def hilmann_grassl(rpp, verbose=False):
+def hillman_grassl(rpp, verbose=False):
     n = get_rpp_size(rpp)
 
     col_lengths = get_col_lengths(rpp)
@@ -40,6 +40,38 @@ def hilmann_grassl(rpp, verbose=False):
     
     
     return m
+
+
+
+def hillman_grassl_inverse(m, verbose=False):
+    col_lengths = get_col_lengths(m)
+    
+    pivots = get_pivots(m, col_lengths)
+    
+    
+    
+    rpp = []
+    
+    for i in range(len(m)):
+        rpp.append([])
+        
+        for j in range(len(m[i])):
+        	    rpp[i].append(0)
+    
+    
+    
+    for pivot in pivots:
+        return_path = get_return_path(rpp, col_lengths, pivot)
+        
+        _antiderive_rpp_(rpp, return_path)
+        
+        if verbose:
+            print_rpp(rpp)
+            
+            print("")
+        
+    
+    return rpp
 
 
 
@@ -111,8 +143,6 @@ def get_zigzag_path(rpp, col_lengths):
     start_j = 0
     r = 0
 
-    pivot = (0, 0)
-
     #First, find the smallest j so that (q_j, j > 0).
     for j in range(len(rpp[0])):
         if rpp[col_lengths[j] - 1][j] != 0:
@@ -146,6 +176,31 @@ def get_zigzag_path(rpp, col_lengths):
 
 
 
+#Returns the return path for an rpp -- the inverse of a zigzag path.
+def get_return_path(rpp, col_lengths, pivot):
+    path = []
+    
+    start_i = pivot[0]
+    end_i = col_lengths[pivot[1]] - 1
+    
+    #Start j at the end of the pivot's row.
+    start_j = len(rpp[pivot[0]]) - 1
+    end_j = pivot[1]
+    
+    #We'll deal with the final row separately.
+    for i in range(start_i, end_i):
+        for j in range(start_j, end_j - 1, -1):
+            if col_lengths[j] >= i + 2 and rpp[i][j] == rpp[i + 1][j]:
+                path += [[i, k] for k in range(start_j, j - 1, -1)]
+                start_j = j
+                break
+    
+    path += [[end_i, k] for k in range(start_j, end_j - 1, -1)]
+    
+    return path
+
+
+
 def _derive_rpp_(rpp, zigzag_path):
     for box in zigzag_path:
         rpp[box[0]][box[1]] -= 1
@@ -154,10 +209,36 @@ def _derive_rpp_(rpp, zigzag_path):
 
 
 
-rpp = [
+def _antiderive_rpp_(rpp, return_path):
+    for box in return_path:
+        rpp[box[0]][box[1]] += 1
+    
+    return
+
+
+
+#Returns the array of pivots corresponding to the lambda-array m.
+def get_pivots(m, col_lengths):
+    pivots = []
+    
+    for j in range(len(m[0]) - 1, -1, -1):
+        for i in range(col_lengths[j]):
+            for k in range(m[i][j]):
+                pivots.append([i, j]) 
+    
+    return pivots
+
+
+
+rpp = \
+[
     [1, 2, 4],
     [3, 5, 5],
     [4]
 ]
 
-print_rpp(hilmann_grassl(rpp, False))
+m = hillman_grassl(rpp, True)
+
+print("\n")
+
+print_rpp(hillman_grassl_inverse(m, True))
