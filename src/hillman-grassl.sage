@@ -1,3 +1,8 @@
+import copy
+import time
+
+
+
 #Converts an rpp to an s-tuple of multiplicities as specified in the Hillman-Grassl paper.
 def hillman_grassl(rpp, verbose=False):
 	n = get_rpp_size(rpp)
@@ -9,13 +14,8 @@ def hillman_grassl(rpp, verbose=False):
 
 	path_lengths = []
 
-	m = []
-
-	for i in range(len(rpp)):
-		m.append([])
-
-		for j in range(len(rpp[i])):
-			m[i].append(0)
+	#Make m the same shape as rpp
+	m = copy.deepcopy()
 
 
 
@@ -255,7 +255,7 @@ def lambda_arrays_of_given_shape(shape, n):
 	col_lengths = get_col_lengths(shape)
 
 	hook_lengths, indices = get_hook_lengths_list(shape, col_lengths)
-
+	
 	m = [0 for i in range(len(hook_lengths))]
 
 	lambda_arrays = []
@@ -320,20 +320,26 @@ def get_valid_rpp_shapes(n):
 
 
 
-def get_rpps(n, max_boxes):
+def get_rpps(n, shape):
 	rpps = []
 
-	shapes = get_valid_rpp_shapes(max_boxes)
+	start_time = time.perf_counter()
+	lambda_arrays = lambda_arrays_of_given_shape(shape, n)
+	print(f"Time to get lambda arrays: {time.perf_counter() - start_time}")
 
-	for shape in shapes:
-		lambda_arrays = lambda_arrays_of_given_shape(shape, n)
-
-		for lambda_array in lambda_arrays:
-			rpps.append(hillman_grassl_inverse(lambda_array))
+	start_time = time.perf_counter()
+	for lambda_array in lambda_arrays:
+		rpps.append(hillman_grassl_inverse(lambda_array))
+	print(f"Time to apply hillman grassl: {time.perf_counter() - start_time}")
 
 	return rpps
 
 
-rpps = get_rpps(10, 10)
 
-print(len(rpps))
+shape = [
+	[0, 0, 0, 0],
+	[0, 0],
+	[0]
+]
+
+rpps = get_rpps(30, shape)
