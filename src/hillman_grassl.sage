@@ -255,7 +255,7 @@ def lambda_arrays_of_given_shape(shape, n):
 	col_lengths = get_col_lengths(shape)
 
 	hook_lengths, indices = get_hook_lengths_list(shape, col_lengths)
-	
+
 	m = [0 for i in range(len(hook_lengths))]
 
 	lambda_arrays = []
@@ -342,4 +342,4 @@ shape = [
 	[0]
 ]
 
-rpps = get_rpps(30, shape)
+rpps = get_rpps(50, shape)
