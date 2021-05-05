@@ -40,13 +40,73 @@ def get_rim_hooks(rpp, col_lengths):
 
 
 
+#Returns (I, O, A, B), where each is a set of contents.
+def get_corners(rpp, col_lengths):
+	I = []
+	O = []
+	A = []
+	B = []
+
+	max_content = len(rpp[0]) - 1
+	min_content = -(col_lengths[0] - 1)
+
+	for content in range(min_content, max_content + 1):
+		i = 0
+		j = 0
+
+		if content > 0:
+			j = content
+
+		elif content < 0:
+			i = -content
+
+		while i + 1 < len(rpp) and j + 1 < len(rpp[i + 1]):
+			i += 1
+			j += 1
+
+
+
+		if i == col_lengths[j] - 1 and (j == 0 or (col_lengths[j - 1] >= i + 1 and j < len(rpp[0]) - 1 and col_lengths[j + 1] >= i + 1)):
+			A.append(content)
+
+		elif j == len(rpp[i]) - 1 and (i == 0 or (len(rpp[i - 1]) >= j + 1 and i < len(rpp) - 1 and len(rpp[i + 1]) >= j + 1)):
+			B.append(content)
+
+		#At this point, it must be a corner.
+		elif i == col_lengths[j] - 1:
+			O.append(content)
+
+		else:
+			I.append(content)
+
+	return I, O, A, B
+
+
+
+def get_candidates(rpp, col_lengths):
+	candidates = []
+
+	for i in range(len(rpp)):
+		for j in range(len(rpp[i])):
+			#If [i, j] \in O, we need rpp[i][j] > rpp[i][j - 1].
+			pass
+
+
+
 rpp = [
-	[0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0],
 	[0, 0, 0],
-	[0]
+	[0, 0, 0],
+	[0, 0, 0]
 ]
 
-rim_hooks = get_rim_hooks(rpp, get_col_lengths(rpp))
+I, O, A, B = get_corners(rpp, get_col_lengths(rpp))
 
-for rim_hook in rim_hooks:
-	print(rim_hook)
+print(I)
+print(O)
+print(A)
+print(B)
