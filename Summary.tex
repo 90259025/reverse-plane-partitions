@@ -1,0 +1,100 @@
+\input{../../../../../Miscellaneous/preamble.tex}
+
+\begin{document}
+
+\vspace*{.25in}
+
+\begin{center}
+	\huge \textbf{Reverse Plane Partitions: A Summary}\\
+\end{center}
+
+\vspace{.25in}
+
+
+In spring 2021, Ben Young led a reading course on reverse plane partitions and related topics. Here we summarize the main results of the papers we covered for future reference.\\
+
+
+
+\vspace{.25in}
+
+\Large \textbf{Preliminaries}\\
+
+\normalsize
+
+A \textbf{Young diagram}, or \textbf{tableau}, is a grid of numbers whose rows are in the shape of an integer partition (i.e. the row lengths are weakly decreasing). For our purposes, these tableaux are populated with nonnegative integers, in which case they are called \textbf{$\mathbb{N}$-tableaux}, or occasionally \textbf{$\lambda$-arrays} if $\lambda$ is a fixed integer partition.\\
+
+There are several specific types of $\mathbb{N}$-tableaux we are concerned with. A \textbf{plane partition of $n$} for $n \in \mathbb{N}$ is an $\mathbb{N}$-tableau in which the entries weakly decrease along rows and columns and sum to $n$. A \textbf{reverse plane partition of $n$}, or RPP, is identical, but the entries weakly increase instead. A \textbf{plane partition of $n$ asymptotic to an integer partition $\lambda$} is a plane partition of $n$ in which the upper-left entries in the shape of $\lambda$ are unfilled.\\
+
+A \textbf{standard Young tableau}, or SYT, is a Young tableau in which the numbers $1, ..., n$ are each used exactly once, where there are $n$ boxes in the tableau, and the entries strictly increase along rows and columns. A \textbf{semistandard Young tableau}, or SSYT, is a Young tableau in which the entries weakly increase along rows and strictly increase along columns.\\
+
+Finally, given any box $a$ in a Young diagram, the \textbf{hook length of $a$}, denoted $h(a)$, is the number of boxes which are weakly to the right of $a$ or below $a$ --- i.e. including $a$ itself. These boxes form a right-angled hook shape, hence the name.\\
+
+
+
+\vspace{.25in}
+
+\Large \textbf{RSK}\\
+
+\normalsize
+
+The RSK correspondence gives a bijection between RPP and pairs $(P, Q)$ of SSYT and SYT, respectively, where all three objects have the same fixed shape. Given $(P, Q)$, we read off the entries of $P$ in the order specified by $Q$ and perform a particular algorithm to insert them one-by-one into an empty RPP in the shape of $P$ to produce the RPP. Specifically, the insertion proceeds as follows: given a partially-completed RPP $R$ and the integer $r_0$ to insert, we consider the first row of $R$. Moving from left to right, we find the first entry of the row that is larger than $r_0$, say $r_1$. We replace $r_1$ with $r_0$ and proceed to insert $r_1$ into the second row, find the first entry $r_2$ which is greater than $r_1$, and so on. The process terminates when there is no entry greater than some $r_i$ in row $i + 1$, in which case we simply append $r_i$ to the end of row $i + 1$.\\
+
+RSK can also be phrased in terms of matrices, as presented in Sam Hopkins' notes.
+
+
+
+\vspace{.25in}
+
+\Large \textbf{Hillman-Grassl}\\
+
+\normalsize
+
+The Hillman-Grassl correspondence is a bijection between RPP and $\mathbb{N}$-tableaux. Given an RPP $\pi$, a \textbf{zigzag path} is formed, which is a strip of boxes, not necessarily along the ragged edge, whose entries may be decremented without destroying the property that $\pi$ is an RPP. Specifically, we let $Z(\pi)$ be the set of boxes beginning with the leftmost nonzero box at the bottom of its column. Then if $a$ is the most-recently added box, we add $\mathbf{n}a$, the box above (north of) $a$, if it exists and $\pi(a) = \pi(\mathbf{n}a)$, and $\mathbf{e}a$ otherwise. These paths therefore always end on the rightmost box of a row. We define the \textbf{derived RPP} of $\pi$ as $\pi' = \pi - Z(\pi)$, where the notation means decrementing every element of $\pi$ whose box is contained in $Z(\pi)$. The \textbf{pivot} of $Z(\pi)$ is the box whose row is the row of the final element added to $Z(\pi)$ and whose column is the column of the first element added --- in other words, it is the top-left corner of the smallest rectangle containing $Z(\pi)$. To perform the Hillman-Grassl algorithm on an RPP $\pi$, we initialize an $\mathbb{N}$-tableau $T$ of the same shape as $\pi$ with zeros. Then while $\pi$ is nonzero, we find its zigzag path $Z(\pi)$ and pivot $(i, j)$, derive $\pi$, and add one to $T(i, j)$. This process is reversible: it can be shown that the pivots decrease in reverse lexicographic order, and zigzag paths can be reconstructed from just their pivots, so the process is a bijection.
+
+
+
+\vspace{.25in}
+
+\Large \textbf{Pak}\\
+
+\normalsize
+
+Igor Pak's 2002 paper details another correspondence between RPP and $\mathbb{N}$-tableaux that is distinct from Hillman-Grassl's. It iterates over diagonals ending in outer corners, modifying the diagonal entries and then ``popping off'' the outer corner, which becomes part of the $\mathbb{N}$-tableau. Of note is the property that diagonal sums in the RPP equal the corresponding rectangle sums in the $\mathbb{N}$-tableau. The inverse map can be defined in similar terms to the original, but there is a more interesting option: Sulzgruber's map.
+
+
+
+\vspace{.25in}
+
+\Large \textbf{Sulzgruber}\\
+
+\normalsize
+
+Fifteen years after Pak's paper, Robin Sulzgruber discovered a new bijection between RPP and $\mathbb{N}$-tableaux --- or rather, a new approach that happens to be equivalent to the inverse of Pak's map. The direction from $\mathbb{N}$-tableaux to RPP is the simpler of the two, in contrast to Pak's map, for which the opposite is true. Given an $\mathbb{N}$-tableau $T$, Sulzgruber's map associates every box $(i, j)$ with a \textbf{rim-hook}, which is just the largest strip of boxes along the ragged edge whose southwest column and northeast row are $j$ and $i$, respectively. Then the elements of $T$ are read in reverse lexicographic order, and for every nonzero entry $a$, $a$ rim-hooks corresponding to its box are inserted into an RPP that begins empty. The insertion process itself is somewhat particular: given an existing RPP $\pi$ and a rim-hook $h$, we first attempt to simply increment the boxes in $\pi \cap h$. This insertion is said to succeed if all of those boxes to be incremented have the same value. If they don't, we partition $h$ into two pieces: as many top rows as possible such that all their entries in $\pi$ are constant, and the remaining bottom rows. We then shift the boxes in the second part northeast by one and try the insertion again. If some insertion works and produces an RPP, the insertion succeeds.\\
+
+A theorem toward the end of Sulzgruber's paper gives the result that Pak's map and Sulzgruber's are in fact inverses. Since each has a simple description for one direction, some implementations (i.e. Sage) only support Pak from RPP to $\mathbb{N}$-tableaux and Sulzgruber in the reverse direction.\\
+
+
+
+\vspace{.25in}
+
+\Large \textbf{Garver and Patrias}\\
+
+\normalsize
+
+Later that year, Garver and Patrias reinterpreted the results of Sulzgruber, relating it to the RSK algorithm. Given a Young diagram, we first label the boxes in reading order. Given an $\mathbb{N}$-tableau $T$, we convert it to a multiset of rim-hooks in the same manner Sulzgruber does. Rather than inserting them into an empty RPP, we instead split $T$ into its diagonals and create a word for each diagonal given by the labels of the rim-hooks that intersect it. We then run RSK on each word to generate an RPP, and extract the integer partition that corresponds to its shape. We place that into the diagonal of a null RPP, where the first row's length is placed in the last box in the diagonal, and so on. This process is in fact equivalent to Sulzgruber's algorithm, and provides a way to directly link it to RSK.
+
+
+
+\vspace{.25in}
+
+\Large \textbf{Future Research}\\
+
+\normalsize
+
+A relevant research area for these results is applying them to plane partitions asymptotic to an integer partition $\lambda$. A well-known theorem relates the number of them to the number of regular and reverse plane partitions of shape $\lambda$ --- we would like to give a bijective proof of this fact, which would seemingly require developing a theory of rim-hooks, zigzag paths, and/or diagonal RSK for plane partitions asymptotic to $\lambda$.
+
+
+
+
+
+\end{document}
