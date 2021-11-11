@@ -1,0 +1,91 @@
+\input{../../../../Miscellaneous/preamble.tex}
+
+\begin{document}
+
+\vspace*{.25in}
+
+\begin{center}
+	\huge \textbf{The Commutation of the $\Gamma$ Operators}\\
+\end{center}
+
+\vspace{.5in}
+
+\Large \textbf{An Algebraic Proof for One-Part Partitions}\\
+
+\normalsize
+
+Let $\lambda$ and $\mu$ be one-part partitions --- i.e. integers. We wish to show the identity
+
+$$
+	\bra{\mu} \Gamma_-(b) \Gamma_+(a) \ket{\lambda} = \frac{1}{1 - ab} \bra{\mu} \Gamma_+(a) \Gamma_-(b) \ket{\lambda}.
+$$
+~\\
+We begin with the right side. We have that
+
+$$
+	\bra{\mu} \Gamma_+(a) \Gamma_-(b) \ket{\lambda} = \sum_{\mu \succ \eta \prec \lambda} b^{|\lambda| - |\eta|} a^{|\mu| - |\eta|}.
+$$
+~\\
+Let $M = \max(\lambda, \mu)$ and $m = \min(\lambda, \mu)$. Since $\eta$ can be at most a one-part partition, we can write the previous equation as
+
+$$
+	\sum_{\mu \geq \eta \leq \lambda} b^{\lambda - \eta} a^{\mu - \eta} = \sum_{0 \leq \eta \leq m} b^{\lambda - \eta} a^{\mu - \eta}.
+$$
+~\\
+Now let's consider the left side of the identity. Since the first operator is $\Gamma_+$, we will be summing over $\eta$ that are at most two-partitions, which we can write as $\eta = (\eta_1, \eta_2)$. Then we have
+
+\begin{align*}
+	\bra{\mu} \Gamma_-(b) \Gamma_+(a) \ket{\lambda} &= \sum_{\mu \prec \eta \succ \lambda} b^{|\eta| - |\lambda|} a^{|\eta| - |\mu|}\\
+	&= \sum_{\eta_1 \geq M} \sum_{0 \leq \eta_2 \leq m} a^{\eta_1 + \eta_2 - \lambda} b^{\eta_1 + \eta_2 - \mu}\\
+	&= \sum_{0 \leq \eta_2 \leq m} \sum_{\eta_1 \geq M} a^{\eta_1 + \eta_2 - \lambda} b^{\eta_1 + \eta_2 - \mu}\\
+	&= \sum_{0 \leq \eta_2 \leq m} \sum_{\eta_1 \geq 0} a^{\eta_1 + \eta_2 - \lambda + M} b^{\eta_1 + \eta_2 - \mu + M}.
+\end{align*}
+~\\
+Now $\lambda + \mu = m + M$, so $M - \lambda = \mu - m$ and $M - \mu = \lambda - m$. Since $0 \leq \eta_2 \leq m$, we have that $-m \leq \eta_2 - m \leq 0$. Therefore, setting $i = -(\eta_2 - m)$, we have
+
+\begin{align*}
+	\bra{\mu} \Gamma_-(b) \Gamma_+(a) \ket{\lambda} &= \sum_{0 \leq \eta_2 \leq m} \sum_{\eta_1 \geq 0} a^{\eta_1 + \eta_2 + \mu - m} b^{\eta_1 + \eta_2 + \lambda - m}\\
+	&= \sum_{0 \leq i \leq m} \sum_{\eta_1 \geq 0} a^{\eta_1 + \mu - i} b^{\eta_1 + \lambda - i}\\
+	&= \sum_{0 \leq i \leq m} \sum_{\eta_1 \geq 0} (ab)^{\eta_1} a^{\mu - i} b^{\lambda - i}\\
+	&= \frac{1}{1 - ab} \sum_{0 \leq i \leq m} a^{\mu - i} b^{\lambda - i}\\
+	&= \frac{1}{1 - ab} \bra{\mu} \Gamma_+(a) \Gamma_-(b) \ket{\lambda},
+\end{align*}
+~\\
+as required. Thus $\Gamma_+$ and $\Gamma_-$ commute for one-part partitions.
+
+\vspace{.5in}
+
+\Large \textbf{A Combinatorial Proof for Arbitrary Partitions}\\
+
+\normalsize
+
+We now give a combinatorial proof of the commutation for any partitions $\mu$ and $\lambda$ with an equal number of parts, say $m$. This amounts to a bijection sending $\eta$ with $\mu \prec \eta \succ \lambda$ to another partition $\eta'$ with $\mu \succ \eta' \prec \lambda$ and an integer $n$, such that
+
+$$
+	a^{|\eta| - |\lambda|} b^{|\eta| - |\mu|} = (ab)^n b^{|\lambda| - |\eta|} a^{|\mu| - |\eta|}.
+$$
+~\\
+We accomplish this using toggles. Toggling $\eta$ with respect to $\lambda$ and $\mu$ produces a partition $\eta'$ as follows: we set $\eta'_i = \min(\lambda_i, \mu_i) + \max(\lambda_{i + 1}, \mu_{i + 1}) - \eta_{i + 1}$ for $1 \leq i \leq m$, where we set $\lambda_{m + 1} = \mu_{m + 1} = 0$. We then take $n = \eta_1 - \max(\lambda_1, \mu_1)$.\\
+
+We have $\mu \prec \eta \succ \lambda$ if and only if $\min(\lambda_i, \mu_i) \geq \eta_{i + 1} \geq \max(\lambda_{i + 1}, \mu_{i + 1})$ for $1 \leq i \leq n$, and $\eta_1 \geq \max(\lambda_1, \mu_1)$. But the first criterion is equivalent to
+
+$$
+	-\min(\lambda_i, \mu_i) \leq -\eta_{i + 1} \leq -\max(\lambda_{i + 1}, \mu_{i + 1}),
+$$
+
+which is equivalent to
+
+$$
+	\max(\lambda_{i + 1}, \mu_{i + 1}) \leq \min(\lambda_i, \mu_i) + \max(\lambda_{i + 1}, \mu_{i + 1}) - \eta_{i + 1} \leq \min(\lambda_i, \mu_i),
+$$
+
+and therefore
+
+$$
+	\max(\lambda_{i + 1}, \mu_{i + 1}) \leq \eta'_i \leq \min(\lambda_i, \mu_i).
+$$
+
+But this is exactly the statement that $\lambda \succ \eta' \prec \mu$. And the second criterion is equivalent to $n \geq 0$. Now we can recover every $\eta_i$ for $i > 1$ by $\eta_i = \min(\lambda_{i - 1}, \mu_{i - 1}) + \max(\lambda_i, \mu_i) - \eta'_{i - 1}$, and we can recover $\eta_1$ by $\eta_1 = \max(\lambda_1, \mu_1) + n$. Thus the operation is invertible, and therefore a bijection. Combinatorially, this means a partition interlacing both $\lambda$ and $\mu$ can be identified with its toggle relative to $\lambda$ and $\mu$, along with the amount that its first entry is larger than the minimum possible value.
+
+
+\end{document}
