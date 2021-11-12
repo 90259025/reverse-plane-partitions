@@ -62,7 +62,7 @@ as required. Thus $\Gamma_+$ and $\Gamma_-$ commute for one-part partitions.
 We now give a combinatorial proof of the commutation for any partitions $\mu$ and $\lambda$ with an equal number of parts, say $m$. This amounts to a bijection sending $\eta$ with $\mu \prec \eta \succ \lambda$ to another partition $\eta'$ with $\mu \succ \eta' \prec \lambda$ and an integer $n$, such that
 
 $$
-	a^{|\eta| - |\lambda|} b^{|\eta| - |\mu|} = (ab)^n b^{|\lambda| - |\eta|} a^{|\mu| - |\eta|}.
+	a^{|\eta| - |\lambda|} b^{|\eta| - |\mu|} = (ab)^n b^{|\lambda| - |\eta'|} a^{|\mu| - |\eta'|}.
 $$
 ~\\
 We accomplish this using toggles. Toggling $\eta$ with respect to $\lambda$ and $\mu$ produces a partition $\eta'$ as follows: we set $\eta'_i = \min(\lambda_i, \mu_i) + \max(\lambda_{i + 1}, \mu_{i + 1}) - \eta_{i + 1}$ for $1 \leq i \leq m$, where we set $\lambda_{m + 1} = \mu_{m + 1} = 0$. We then take $n = \eta_1 - \max(\lambda_1, \mu_1)$.\\
@@ -85,7 +85,9 @@ $$
 	\max(\lambda_{i + 1}, \mu_{i + 1}) \leq \eta'_i \leq \min(\lambda_i, \mu_i).
 $$
 
-But this is exactly the statement that $\lambda \succ \eta' \prec \mu$. And the second criterion is equivalent to $n \geq 0$. Now we can recover every $\eta_i$ for $i > 1$ by $\eta_i = \min(\lambda_{i - 1}, \mu_{i - 1}) + \max(\lambda_i, \mu_i) - \eta'_{i - 1}$, and we can recover $\eta_1$ by $\eta_1 = \max(\lambda_1, \mu_1) + n$. Thus the operation is invertible, and therefore a bijection. Combinatorially, this means a partition interlacing both $\lambda$ and $\mu$ can be identified with its toggle relative to $\lambda$ and $\mu$, along with the amount that its first entry is larger than the minimum possible value.
+But this is exactly the statement that $\lambda \succ \eta' \prec \mu$. And the second criterion is equivalent to $n \geq 0$. Now we can recover every $\eta_i$ for $i > 1$ by $\eta_i = \min(\lambda_{i - 1}, \mu_{i - 1}) + \max(\lambda_i, \mu_i) - \eta'_{i - 1}$, and we can recover $\eta_1$ by $\eta_1 = \max(\lambda_1, \mu_1) + n$. Thus the operation is invertible.\\
+
+It remains to show that the weights match --- specifically, that $|\eta| - |\lambda| = |\mu| - |\eta'|$. We have that $|\eta'| = |\lambda| + |\mu| - |\eta|$ since each entry of $\lambda$ and $\mu$ is added to $\eta'$ exactly once. Thus the weights are as required, and together with invertibility, our modified toggle is therefore a bijection. Combinatorially, this means a partition interlacing both $\lambda$ and $\mu$ can be identified with its toggle relative to $\lambda$ and $\mu$, along with the amount that its first entry is larger than the minimum possible value.
 
 
 \end{document}
