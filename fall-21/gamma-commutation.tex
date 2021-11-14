@@ -10,7 +10,9 @@
 
 \vspace{.5in}
 
-\Large \textbf{An Algebraic Proof for One-Part Partitions}\\
+\Large \textbf{An Algebraic Proof for One-Part Partitions}
+
+\vspace{.25in}
 
 \normalsize
 
@@ -55,7 +57,13 @@ as required. Thus $\Gamma_+$ and $\Gamma_-$ commute for one-part partitions.
 
 \vspace{.5in}
 
-\Large \textbf{A Combinatorial Proof for Arbitrary Partitions}\\
+\Large \textbf{A Combinatorial Proof for Arbitrary Partitions}
+
+\vspace{.25in}
+
+\large \textbf{$\Gamma_+$ commutes with $\Gamma_-$}
+
+\vspace{.25in}
 
 \normalsize
 
@@ -89,5 +97,28 @@ But this is exactly the statement that $\lambda \succ \eta' \prec \mu$. And the 
 
 It remains to show that the weights match --- specifically, that $|\eta| - |\lambda| = |\mu| - |\eta'|$. We have that $|\eta'| = |\lambda| + |\mu| - |\eta|$ since each entry of $\lambda$ and $\mu$ is added to $\eta'$ exactly once. Thus the weights are as required, and together with invertibility, our modified toggle is therefore a bijection. Combinatorially, this means a partition interlacing both $\lambda$ and $\mu$ can be identified with its toggle relative to $\lambda$ and $\mu$, along with the amount that its first entry is larger than the minimum possible value.
 
+\vspace{.5in}
+
+\large \textbf{$\Gamma_+$ and $\Gamma_-$ commute with themselves}
+
+\vspace{.25in}
+
+The logic is identical for both $\Gamma_+$ and $\Gamma_-$ --- we will discuss the former. We wish to show
+
+$$
+	\sum_{\lambda \prec \eta \prec \mu} a^{|\eta| - |\lambda|} b^{|\mu| - |\eta|} = \sum_{\lambda \prec \eta \prec \mu} a^{|\mu| - |\eta|} b^{|\eta| - |\lambda|},
+$$
+~\\
+so in order to give a combinatorial proof, we will need to identify a partition $\eta$ with $\lambda \prec \eta \prec \mu$ with another partition $\eta'$ also satisfying $\lambda \prec \eta' \prec \mu$, such that $|\mu| - |\eta| = |\eta'| - |\lambda|$ and $|\eta| - |\lambda| = |\mu| - |\eta'|$. Once again, we can use toggles. Since $\mu \succ \eta$, the toggle of $\eta$ relative to $\lambda$ and $\mu$ no longer destroys its first entry, removing the free variable we labeled $n$ in the previous section. We have
+
+$$
+	\eta'_i = \min(\lambda_{i - 1}, \mu_i) + \max(\lambda_i, \mu_{i + 1}) - \eta_i, i > 1,
+$$
+
+$$
+	\eta'_1 = \mu_1 + \max(\lambda_1, \mu_2) - \eta_1.
+$$
+~\\
+As before, this ensures that $\lambda \prec \eta' \prec \mu$, and we also have that $|\eta'| = |\lambda| + |\mu| - |\eta|$. Rearranging, we see that $|\mu| - |\eta| = |\eta'| - |\lambda|$ and $|\eta| - |\lambda| = |\mu| - |\eta'|$, as required.
 
 \end{document}
