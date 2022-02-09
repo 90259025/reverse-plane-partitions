@@ -1,0 +1,53 @@
+\input{../../../../Miscellaneous/preamble.tex}
+
+
+\begin{document}
+
+\begin{Theorem}
+	%
+	Let $\lambda$ be a Young diagram, and let $M(q)$, $R_\lambda(q)$, and $A_\lambda(q)$ denote the generating functions of plane partitions, reverse plane partitions of shape $\lambda$, and plane partitions asymptotic to $\lambda$, respectively. Then $A_\lambda(q) = R_\lambda(q) M(q)$.
+	
+\end{Theorem}
+
+
+
+\begin{Proof}
+	%
+	Fix $\lambda$, and let $\textsc{PP}$, $\textsc{RPP}_\lambda$, and $\textsc{APP}_\lambda$ denote the sets of plane partitions, reverse plane partitions of shape $\lambda$, and plane partitions asymptotic to $\lambda$, respectively. We seek a bijection $S : \textsc{RPP}_\lambda \times \textsc{PP} \longrightarrow \textsc{APP}_\lambda$, such that if $\alpha = S(\rho, \pi)$, then $w(\alpha) = w(\rho) + w(\pi)$, where $w$ denotes the weight function.\\
+	
+	We will first construct an injection $f$ from boxes of $\rho$ to boxes of $\alpha$ that preserves hook length. Consider the infinite binary string $(a_k \mid k \in \mathbb{Z})$ defining $\lambda$, where vertical edges are denoted $0$ and horizontal edges denoted $1$, and the sequence increases from bottom-left to top-right. Fixing $n$, suppose the first $k \in \mathbb{Z}$ for which $a_k = 1$ satisfies $k \equiv b \mod n$. Enumerate the $n$ distinct $n$-cores of $\rho$ as $c_{n, 0}, c_{n, 1}, ..., c_{n, n - 1}$, where $c_{n, i}$ is defined by the substring $(a_k \mid k \equiv b + i \mod n)$. Now in each $c_{n, i}$, inner corners correspond to $n$-hooks of $\rho$, while outer corners correspond to $n$-hooks of $\alpha$. In fact, there is a bijection between $n$-hooks of $\rho$ and all inner corners of the $c_{n, i}$, and similarly between $n$-hooks of $\alpha$ and all outer corners of the $c_{n, i}$. Now in any Young diagram, inner corners are defined by the substring $10$, and outer corners by the substring $01$. Thus there is at least one outer corner, and inner and outer corners alternate moving from bottom-left to top-right along the ragged edge. We may therefore enumerate the inner and outer corners of $c_{n, i}$ as
+	%
+	$$
+		y_{n, i, 0}, x_{n, i, 1}, y_{n, i, 1}, x_{n, i, 2}, y_{n, i, 2}, ..., x_{n, i, m - 1}, y_{n, i, m - 1}, x_{n, i, m}, y_{n, i, m}
+	$$
+	
+	for some $m \in \mathbb{N}$, possibly zero. Here, the $x$ denote inner corners and the $y$ outer corners.\\
+	
+	Now we are prepared to define $f$. Given a box $x \in \rho$, let $n = h(x)$ be its hook length. Then $x$ corresponds to a unique inner corner in some $c_{n, i}$, say $x_{n, i, j}$. The proceeding outer corner in the sequence, $y_{n, i, j}$, corresponds to a unique box $y \in \alpha$ with $h(y) = n$. Define $f(x) = y$.\\
+	
+	Since every box of $\rho$ corresponds to a unique inner corner of some $c_{n, i}$, $f$ is well-defined and injective, and it also preserves hook length. Importantly, the boxes in $\alpha$ that do not lie in the image of $f$ are in bijection with the bottom-left outer corners in each $c_{n, i}$. Since there are $n$ distinct $n$-cores and each contains one missed outer corner, $\alpha$ contains $n$ boxes of hook length $n$ not in $\operatorname{image}(f)$ --- specifically, those $n$ boxes are
+	%
+	$$
+		y_{n, 0, 0}, y_{n, 1, 0}, ..., y_{n, n - 1, 0}.
+	$$
+	
+	We will now define a map $g$ sending boxes of $\pi$ to these $y_{n, i, 0}$. Denote the $n$ distinct $n$-cores of $\pi$ as $d_{n, 0}, d_{n, 1}, ..., d_{n, n - 1}$, ordered as before. Since $\pi$ has no ragged edge, its binary string is just $\cdots 000111 \cdots$, so every $d_{n, i}$ has the same string, and therefore a single outer corner, which we denote $z_{n, i}$. By the same logic as before, $\pi$ therefore contains $n$ distinct boxes with hook length $n$, and each corresponds uniquely with some $z_{n, i}$. Given a box $z \in \pi$ with $h(z) = n$, first find the corresponding $z_{n, i}$. The outer corner $y_{n, i, 0}$ corresponds to a box $y \in \alpha$ with $h(y) = n$. Define $g(z) = y$.\\
+	
+	The maps $f$ and $g$ therefore put the boxes of $\alpha$ in bijection with the union of the boxes in $\rho$ and $\pi$, preserving hook length. However, we cannot simply copy the entries of $\rho$ and $\pi$ into the corresponding locations in $\alpha$, since the resulting object will not necessarily satisfy the defining inequalities of a plane partition. Instead, we will use the Hillman-Grassl bijection (denoted $\operatorname{HG}$) to convert both $\rho$ and $\pi$ into $\mathbb{N}$-tableaux of the same shape, copy those entries into an $\mathbb{N}$-tableau of the same shape as $\alpha$, and then apply $\operatorname{HG}^{-1}$ to convert the resulting object back to a plane partition.\\
+	
+	Let $\rho' = \operatorname{HG}(\rho)$ and $\pi' = \operatorname{HG}(\pi)$. Then $\rho'$ is an $\mathbb{N}$-tableau of the same shape as $\rho$, such that $\sum_{x \in \rho'} \rho'(x) h(x) = w(\rho)$. Similarly, $\pi'$ is an $\mathbb{N}$-tableau of the same shape as $\pi$, such that $\sum_{x \in \pi'} \pi'(x) h(x) = w(\pi)$. Define an $\mathbb{N}$-tableau $\alpha'$ of the same shape as $\alpha$ such that $\rho'(x) = \alpha'(f(x))$ for all $x \in \rho'$, and $\pi'(x) = \alpha'(g(x))$ for all $x \in \pi'$. Thus $\alpha'$ is uniquely determined by $\rho'$ and $\pi'$, and therefore by $\rho$ and $\pi$, since $\operatorname{HG}$ is a bijection. Now define $\alpha = \operatorname{HG}^{-1}(\alpha')$. This uniquely determines $\alpha$ in terms of $\rho$ and $\pi$. Since $\operatorname{HG}$ is a bijection and every entry of $\alpha'$ is determined by some entry of either $\rho'$ or $\pi'$, the map $S : (\rho, \pi) \longmapsto \alpha$ is a bijection between $\textsc{RPP}_\lambda \times \textsc{PP}$ and $\textsc{APP}_\lambda$, and we have
+	%
+	\begin{align*}
+		w(\alpha) &= \sum_{x \in \alpha'} \alpha'(x) h(x)\\
+		&= \sum_{x \in \rho'} \alpha'(f(x)) h(f(x)) + \sum_{x \in \pi'} \alpha'(g(x)) h(g(x))\\
+		&= \sum_{x \in \rho'} \rho'(x) h(x) + \sum_{x \in \pi'} \pi'(x) h(x)\\
+		&= w(\rho) + w(\pi),
+	\end{align*}
+	
+	as required. \hfill \qedsymbol
+	
+\end{Proof}
+
+
+
+\end{document}
