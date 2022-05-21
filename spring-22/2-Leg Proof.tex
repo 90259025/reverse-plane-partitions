@@ -1,0 +1,42 @@
+\input{../../../../Miscellaneous/preamble.tex}
+
+
+\begin{document}
+
+\begin{Theorem}
+	%
+	Let $\lambda$ be a Young diagram, and let $M(q)$, $RPP_{(\lambda, \mu, \emptyset)}(q)$, and $APP_{(\lambda, \mu, \emptyset)}(q)$ denote the generating functions of plane partitions, reverse plane partitions of shape $(\lambda, \mu, \emptyset)$, and plane partitions asymptotic to $(\lambda, \mu, \emptyset)$, respectively. Then $APP_{(\lambda, \mu, \emptyset)}(q) = RPP_{(\lambda, \mu, \emptyset)}(q) M(q)$.
+	
+\end{Theorem}
+
+
+
+\begin{Proof}
+	%
+	In order to show this bijectively, we require a bijection $\varphi$ such that for a plane partition $\alpha$ asymptotic to $(\lambda, \mu, \emptyset)$, $\varphi(\alpha)$ is a pair $(\rho, \pi)$ of an RPP of shape $(\lambda, \mu, \emptyset)$ and a plane partition, respectively, with $|\alpha| = |\rho| + |\pi|$.
+	
+	Let $\alpha$ be such an APP. Using vertex operators, $\alpha$ corresponds to a single $q^{|\alpha|}$ in the generating function
+	%
+	$$
+		APP_{(\lambda, \mu, \emptyset)}(q) = \left< \mu \left| \cdots \Gamma_-\left(q^{5/2}\right) \Gamma_-\left(q^{3/2}\right) \Gamma_-\left(q^{1/2}\right) \Gamma_+\left(q^{1/2}\right) \Gamma_+\left(q^{3/2}\right) \Gamma_+\left(q^{5/2}\right) \cdots \right| \lambda \right>.
+	$$
+	
+	We wish to commute every $\Gamma_-$ past every $\Gamma_+$ and vice versa, without reordering the $\Gamma_-$ or $\Gamma_+$. On the infinite square grid $\mathbb{N}^2$, the $\Gamma_+$ correspond to horizontal edges and the $\Gamma_-$ to vertical ones, where we read the edges from top-right to bottom-left. Since we only wish to commute opposite-sign $\Gamma$, in effect we can commute $\Gamma_-(a)$ with $\Gamma_+(b)$ if and only if the edges they correspond to are currently a corner of the diagram.\\
+	
+	Commuting a $\Gamma_-(a)$ left past a $\Gamma_+(b)$ results in multiplying the generating function a factor of $\frac{1}{1 - ab}$, which we've proved corresponds to replacing the relevant diagonal of $\alpha$ with its toggle and then removing the top-left entry of that diagonal. For our purposes, we will leave that entry in place, so that the APP shrinks by popping off outer corners while we create a tableau in the space it leaves behind.\\
+	
+	This procedure is exactly the one described in [Pak]. When $\lambda = \mu = \emptyset$ and $\nu$ is nonempty, this produces a bijection between APPs and tableaux on $\mathbb{N}^2$. If $\lambda$ and $\mu$ were empty in our case, when $\nu = \emptyset$ as well, we can read this off of the generating function: after commuting the $\Gamma_-$ and $\Gamma_+$, we have
+	%
+	$$
+		APP_{(\lambda, \mu, \emptyset)}(q) = M(q) \left< \mu \left| \Gamma_+\left(q^{1/2}\right) \Gamma_+\left(q^{3/2}\right) \Gamma_+\left(q^{5/2}\right) \cdots \Gamma_-\left(q^{5/2}\right) \Gamma_-\left(q^{3/2}\right) \Gamma_-\left(q^{1/2}\right) \right| \lambda \right>,
+	$$
+	
+	and so the second factor will be zero. However, we are working in the more general case in which $\lambda$ and $\mu$ are nonempty, and so that second factor contributes to the entire product. It is exactly the generating function for the RPP of the desired shape, though, and so we have our bijection. We run Pak's bijection on all the boxes in $\mathbb{N}^2$, which leaves behind a strip of boxes ``at infinity'' to the right and below. We then cut this object along the boundary between the finite and infinite components, and run the inverse to Pak's map on the finite portion to reconstitute the plane partition $\pi$. The leftover infinite portion is the RPP $\rho$. Conversely, given $\rho$ and $\pi$, we apply Pak to $\pi$, attach it to $\rho$, then run the inverse bijection to Pak on the finite boxes only.\\
+	
+	Pak's bijection is equivalent to Sulzgruber's, so we can restate the bijection in terms of rim-hooks. However, where Pak's map works on a box-by-box basis, so that we can specify which part of $\alpha$ we should apply it to, Sulzgruber's map is an all-or-nothing affair. With a little more care, our bijection can stated in the following manner: given the APP $\alpha$ as before, we first run Sulzgruber, which affects all boxes, both finite and infinite, and produces a tableau. Next, split this tableau as before into the finite and infinite boxes, and then run the inverse Sulzgruber map on both separately. To see why this is equivalent, notice that we could have run Pak on all the boxes, split them, and inverted it on both separately: the inversion on the infinite boxes shape is equivalent to the inversion if the shape were still taken to be the infinite grid, since Pak refers only to boxes further down and left in diagonals. Replacing Pak with Sulzgruber in this desription produces the desired result. \hfill \qedsymbol
+	
+\end{Proof}
+
+
+
+\end{document}
